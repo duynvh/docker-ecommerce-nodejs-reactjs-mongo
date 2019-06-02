@@ -1,0 +1,28 @@
+version: '3'
+services: 
+  client:
+    image: node:alpine
+    restart: always
+    command: npm start
+    working_dir: /client
+    ports: 
+      - "3000:3000"
+    volumes:
+      - './client:/client'
+    links:
+      - api
+  api:
+    image: node:alpine
+    command: npm start
+    restart: always
+    working_dir: /api
+    ports:
+      - "9000:9000"
+    volumes: 
+      - './api:/api'
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports: 
+      - "27017:27017"
